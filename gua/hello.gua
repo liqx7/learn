@@ -1,0 +1,664 @@
+// 关于画图的资料
+// ----------
+// 画图的画面宽高为 600x400
+// 原点在画布的中点
+// 往右是 x 轴正向
+// 往下是 y 轴正向
+//
+// 初始化的状态是箭头在原点 朝右
+//
+// 下面介绍一些常用的函数
+
+// // 定义一个变量表示步长
+// var step = 50
+//
+// // forward 表示向前走
+// // 刚开始的时候朝右, 并且在坐标 (0, 0)
+// forward(step)
+//
+// // penup 可以把笔抬起来, 这样往前走就不会画线了
+// penup()
+// forward(step)
+//
+// // pendown 后又可以画线了
+// pendown()
+// forward(step)
+//
+// // setHeading(注意大小写) 可以设置箭头的朝向, 0 就是朝右
+// // 90 和 -90 的朝向, 自行摸索一下
+// setHeading(0)
+//
+// // right 可以右转
+// right(30)
+// forward(step)
+//
+// // goto 可以直接走到某个坐标
+// // 这里是走到 (100, 200) 这个坐标
+// goto(100, 200)
+//
+// jump 可以无痕走到某个坐标
+const jump = function(x, y) {
+    penup()
+    goto(x, y)
+    pendown()
+}
+
+// 例子 1
+//
+// 实现函数, 用于画一个边长 100 的正方形
+// 参数 x, y 是正方形左上角坐标
+const square1 = function(x, y) {
+    jump(x, y)
+    // 设置朝向, 确保箭头朝向 右边
+    // 当然如果是用 goto 来画的话, 就不用关心朝向
+    setHeading(0)
+    // 循环画正方形
+    // 当然, 你可以用 goto 来画
+    // 只需要计算一下四个顶点的坐标 (这很简单)
+    var i = 0
+    while (i < 4) {
+        forward(100)
+        right(90)
+        i = i + 1
+    }
+}
+
+// 1
+// ===
+// 实现函数, 用于画一个正方形, 边长由参数提供
+// 参数 x, y 是正方形左上角坐标
+// 参数 length 是正方行边长
+// 函数声明如下
+// square(x, y, length)
+//
+// 本题需要根据例子 1 的代码修改，步骤如下
+// 1. 在例子 1 的基础上再增加一个参数 length
+// 2. forward 的参数换成 length
+
+const square = function(x, y, length) {
+    jump(x, y)
+    // 设置朝向, 确保箭头朝向 右边
+    // 当然如果是用 goto 来画的话, 就不用关心朝向
+    setHeading(0)
+    // 循环画正方形
+    // 当然, 你可以用 goto 来画
+    // 只需要计算一下四个顶点的坐标 (这很简单)
+    var len = length
+    var i = 0
+    while (i < 4) {
+        forward(len)
+        right(90)
+        i = i + 1
+    }
+}
+
+// 2
+// ===
+// 实现函数, 用于画一个矩形, 长宽由参数提供
+// 参数 x, y 是左上角坐标
+// 参数 w, h 是长宽
+// 函数声明如下
+// rect(x, y, w, h)
+//
+// 根据例子 1 的程序修改，步骤如下
+// 1. 考虑矩形只重复两次(一次会画出宽和高), 所以只需要循环 2 次
+
+const rect = function(x, y, w, h) {
+    jump(x, y)
+    // 设置朝向, 确保箭头朝向 右边
+    // 当然如果是用 goto 来画的话, 就不用关心朝向
+    setHeading(0)
+    // 循环画正方形
+    // 当然, 你可以用 goto 来画
+    // 只需要计算一下四个顶点的坐标 (这很简单)
+    var wid = w
+    var hig = h
+    var i = 0
+    while (i < 2) {
+        forward(w)
+        right(90)
+        forward(h)
+        right(90)
+        i = i + 1
+    }
+}
+
+// 3
+// ===
+// 画一排正方形, 一共 5 个
+// 从 0 0 点开始, 边长为 30, 正方形之间间隔为 0
+// 函数声明如下
+// square5()
+//
+// 根据资料中的循环例子, 计算每个正方形的坐标，步骤如下
+// 1. 要画出 5 个正方形, 说明要循环 5 次
+// 2. 计算每次循环的正方形左上角坐标 x, y
+// 3. 在每次循环中画正方形, 调用作业 1 中实现的函数
+
+const square5 = function() {
+    var i = 0
+    while (i < 5) {
+        var x = i * 30
+        var y = 0
+        var len = 30
+        square(x, y, len)
+        i = i + 1
+    }
+}
+
+// square5()
+
+// 4
+// ===
+// 画一排正方形, 一共 5 个
+// 从 0 0 点开始, 边长为 30, 正方形之间间隔为 10 像素
+// 函数声明如下
+// square5_10()
+//
+// 步骤如下
+// 作业 4 和作业 3 的不同之处在于每个正方形的左上角坐标不同
+// 因此在计算出每个左上角的坐标之后，参考作业 3 的提示即可完成
+
+const square5_10 = function() {
+
+}
+
+
+
+// 5
+// ===
+// 实现函数, 画一排正方形, 有如下参数
+// x, y 是第一个正方形左上角坐标
+// n 是正方形的个数
+// space 是两个正方形之间的间距
+// len 是正方形的边长
+// square_line(x, y, n, space, len)
+//
+// 步骤如下:
+// 作业 4 中画 5 个正方形, 循环 5 次
+// 作业 5 中画 n 个正方形, 循环 n 次
+// 同时两个正方形的间距从 10 换成了 space
+
+const square_line = function(x, y, n, space, len) {
+    var i = 0
+    while (i < n) {
+        var x1 = x + i * (len + space)
+        var y1 = y
+        square(x1, y1, len)
+        i = i + 1
+    }
+}
+
+// square_line(0, 0, 5, 20, 30)
+
+// 6
+// ===
+// 实现函数, 用上题的函数来画一个正方形方阵, 参数如下
+// x, y 是第一个正方形左上角坐标
+// space 是两个正方形之间的间距
+// len 是正方形的边长
+// n 是横向正方形的个数
+// m 是纵向正方形的个数
+// square_square(x, y, space, len, n, m)
+//
+// 步骤如下
+// m 是纵向正方形的个数, 所以需要循环 m 次,
+// 每次循环画一排正方形, 这是作业 5 的要求
+// 所以每次循环调用作业 5 的 square_line 函数就行
+
+
+const square_square = function(x, y, space, len, n, m) {
+    var i = 0
+    while(i < m){
+        var x1 = x
+        var y1 = y + i * (space + len)
+        square_line(x1, y1, n, space, len)
+        i = i + 1
+    }
+}
+// square_square(10, 10, 20, 30, 3, 2)
+
+// 7
+// ===
+// 实现函数, 画一排矩形, 有如下参数
+// x, y 是第一个矩形左上角坐标
+// w, h 是矩形长宽
+// n 是矩形的个数
+// space 是两个矩形之间的间距
+// rect_line(x, y, w, h, n, space)
+//
+// 步骤如下
+// 作业 7 和作业 5 的区别是作业 7 要求画矩形, 作业 5 要求画正方形
+// 也就是在作业 7 的每次循环中画一个矩形即可
+
+
+const rect_line = function(x, y, w, h, n, space) {
+    var i = 0
+    while (i < n) {
+        var x1 = x + i * (w + space)
+        var y1 = y
+        rect(x1, y1, w, h)
+        i = i + 1
+    }
+}
+
+// rect_line(50, 50, 30, 20, 3, 10)
+
+// 8
+// ===
+// 实现函数, 画一个矩形方阵, 参数如下
+// x, y 是第一个矩形左上角坐标
+// space 是两个矩形之间的间距(横向和纵向)
+// w, h 是矩形的长宽
+// n 是横向矩形的个数
+// m 是纵向矩形的个数
+// rect_square(x, y, space, w, h, n, m)
+//
+// 步骤如下
+// 参考作业 6, 共 m 次循环
+// 在每次循环中, 画一排矩形, 也就是调用作业 7 中实现的函数
+
+
+const rect_square = function(x, y, space, w, h, n, m) {
+    var i = 0
+    while(i < m){
+        var x1 = x
+        var y1 = y + i * (space + h)
+        rect_line(x1, y1, w, h, n, space)
+        i = i + 1
+    }
+}
+// rect_square(100, 100, 10, 30, 20, 3, 2)
+
+
+// 9
+// ===
+// 实现函数, 画一个正多边形, 参数如下
+// x y 是起点, 设起点为多边形的顶部边的左顶点
+// n 是多边形的边数
+// length 是边长
+// polygon(x, y, n, length)
+//
+// 步骤如下
+// 正多边形和正方形的区别是前者循环 n 次，后者循环 4 次
+// 其他都可以直接参考作业 1
+
+const polygon = function(x, y, n, len){
+    jump(x, y)
+    // 设置朝向, 确保箭头朝向 右边
+    // 当然如果是用 goto 来画的话, 就不用关心朝向
+    setHeading(0)
+    // 循环画正方形
+    // 当然, 你可以用 goto 来画
+    // 只需要计算一下四个顶点的坐标 (这很简单)
+    var i = 0
+    var len1 = len
+    var angle = 360 / n
+    while (i < n) {
+        forward(len1)
+        right(angle)
+        i = i + 1
+    }
+}
+
+// 作业 1
+// 实现一个圆形函数
+// x y 是圆形的圆心
+// r 是半径
+// circle(x, y, r)
+
+
+// 实现步骤如下
+// 第一节课的作业 polygon 在边数很大的时候就像是一个近似源
+// 而实际上电脑是通过模拟多边形来实现画一个圆的
+// 在画 polygon 的时候需要从左上角开始
+// 而我们这个 circle 的 x y 参数是表示圆心的坐标
+// 所以要先从圆心移动到左上角
+
+// 需要注意的是，按照下面的写法
+// 画出的圆会多处一条半径线，这一条线无需理会
+
+
+// 1. 我们用正 36 边形来模拟圆形
+//
+// 2. 正多边形的周长是 n(边数) * l(边长),
+//  而它的外接圆的周长是 2 * math.pi * r
+//  在程序中 math.pi 代表了圆周率，你也可以用 3.1415926535 替代
+//  我们这里把这两个周长看做相等
+//  (因为我们只是用正多边形近似模拟, 不是精准画圆, 小小偏差可以接受)
+//  所以可以算出 l(边长) = (2 * math.pi * r) / n
+//  上面的公式中 l 是多边形边长, r 是圆半径, n 是边数
+//
+// 3. 初始情况下箭头是朝右的, 所以先往左转
+//  左转 90 度等于右转 270 度
+//  所以你需要自己实现一个 left 函数
+//  (或者直接 right(270) 或者 right(-90))
+//  这个角度的具体计算原理见下图
+//  这里直接把公式给出如下, 你可以直接使用
+//  var angle = (90 + (360 / n) / 2)
+//  right(-angle)
+// 4. 转完之后, 移动 r, 也就是半径的距离
+// 5. 这样就移动到了左上角的位置, 但此时角度并不是朝右的,
+//  刚刚往左转动了 angle, 现在往右转回来这个角度
+//  right(angle)
+//  当然，也可以用 setHeading(0) 来
+// 6. 这时候你就在正多边形的顶部横边的左顶点并且方向朝右了
+//  以此为起点画一个正 36 边形即可
+const circle = function(x, y, r){
+    //
+    jump(x,y)
+    var n = 36
+    var l = (2 * math.pi *r) / n
+    var initAngle = 90 + 360 / n /2
+    right(-initAngle)
+    //
+    penup()
+    forward(r)
+    setHeading(0)
+    pendown()
+    var i = 0
+    var len1 = l
+    var angle = 360 / n
+    while (i < n) {
+        forward(len1)
+        right(angle)
+        i = i + 1
+    }
+}
+
+// circle(0, 0, 50)
+
+// 作业 2
+// 实现一个矩形函数
+// x y 是矩形中心的坐标
+// w h 是宽高
+// center_rect(x, y, w, h)
+
+// 在第一课的作业中已经实现了 rect 函数,
+// 不过 rect 函数中的 x, y 是表示左上角坐标,
+// 现在需要实现的 center_rect 函数的 x, y 是矩形中心的坐标,
+// 所以应该先从矩形中心移动到矩形左上角, 然后调用 rect 函数
+
+// 实现步骤如下
+// 1. 根据矩形中心坐标 x, y 计算出左上角坐标 x1, y1
+// 2. 调用 rect 函数, 传入的参数分别为左上角坐标, 宽和高
+const center_rect = function(x, y, w, h){
+    var x1 = x - w / 2
+    var y1 = y - h / 2
+    rect(x1, y1, w, h)
+}
+
+// center_rect(0, 0, 300, 100)
+
+
+// 作业 3
+// 实现一个正五角星(国旗大星星那种)函数
+// x y 是五角星顶部横边的左边点坐标
+// length 是一条线的长度
+// 这是一个正五角星
+// penta(x, y, length)
+
+// 实现步骤如下
+// 1. 正五角星需要重复 5 次, 所以需要循环 5 次
+// 2. 每次循环中前进 length 的长度, 右转 144 度
+// 3. 别忘了循环的时候 i 增加 1
+
+const penta = function(x, y, length){
+    jump(x, y)
+    var i = 0
+    while(i < 5) {
+        forward(length)
+        right(144)
+        i = i + 1
+    }
+}
+
+// penta(0, 0, 100)
+
+
+// 作业 4
+// 实现一个函数画日本国旗
+// 调用 2 个函数画日本国旗
+// 一个画背景的白色矩形
+// 一个画中间的圆，圆的直径必须为国旗高的 3/5
+// x, y 是国旗左上角座标
+// japan(x, y)
+
+
+// 实现步骤如下
+// 日本国旗由两部分组成, 矩形和圆形. 所以依次画出这两个图形
+// 1. 调用 center_rect 函数画一个矩形
+// 2. 调用 circle 函数画一个圆形*/
+var fw = 200
+var fh = 150
+var cw = 300
+var ch = 200
+
+
+const japan = function(x, y){
+    var cx = x + fw / 2
+    var cy = y + fh / 2
+    center_rect(cx, cy, fw, fh)
+    var r = fh * 3 / 5 / 2
+    circle(cx, cy, r)
+}
+
+// japan(0, 0)
+
+
+// 作业 5
+// 实现一个五角星函数
+// x y 是五角星的中心点坐标
+// r 是五角星外接圆的半径
+// penta1(x, y, r)
+
+// 为了实现这个函数, 你需要使用三角函数计算顶点在圆上的坐标
+// 你不需要懂这个数学计算过程, 直接拿来用即可
+// 我们这里帮你实现了正弦余弦函数如下
+const sin = function(degree) {
+    // 这里的 sin 函数接受弧度作为参数
+    // 我们这个函数接受角度, 下面是弧度转角度的公式
+    var radians = degree * math.pi / 180
+    return math.sin(radians)
+}
+
+const cos = function(degree) {
+    var radians = degree * math.pi / 180
+    return math.cos(radians)
+}
+
+// 实现步骤如下
+// 1. 正五角星顶角的一半是 18 度，var du = 18
+// 2. 五角星顶部横边的左边点 B 的 x 坐标为 var x1 = x - cos(du) * r
+// 3. 五角星顶部横边的左边点 B 的 y 坐标为 var y1 = y - sin(du) * r
+// 4. 五角星的长度为 var length = cos(du) * r * 2
+// 5. 调用作业 3 的函数 var length = cos(du) * r * 2
+
+const penta1 = function(x, y, r){
+    var du = 18
+    var x1 = x - cos(du) * r
+    var y1 = y - sin(du) * r
+    var length = cos(du) * r * 2
+    penta(x1, y1, length)
+}
+
+// penta1(0, 0, 100)
+
+// 作业 6
+// 实现一个函数画中国国旗(以下国旗题目都是如此 不重复了)
+// 五角星不要求角度朝向（统一用正五角星）
+// 学有余力的话, 可以调整五个五角星的角度为标准角度
+// 但是要求尺寸必须符合下图中的比例
+// 中国国旗的尺寸是 300 * 200
+// x, y 是国旗左上角座标（后面的题都是这个要求，不再重复说明）
+// china(x, y)
+
+// 实现步骤
+// 中国国旗由两部分组成, 矩形和 5 个五角星, 计算好比例, 依次画完
+// 1. 使用 rect 函数画一个矩形
+// 2. 计算比例，画 5 个五角星(调用 5 次)
+
+// 国旗比例要求：
+// http://www.woqucha.com/uploads/allimg/16/1_161116111341_1.JPG
+const china = function(x, y){
+    var cx = x + cw /2
+    var cy = y + ch /2
+    center_rect(cx, cy, cw, ch)
+    var br = 30
+    var sr =20
+    var bx = x + 50
+    var by=y+50
+    penta1(bx,by,br)
+    var i =0
+    var space =30
+    // 围绕bx by 展开
+    var pr = 80
+    var perAngle = 90 / 3
+    while(i<4){
+        var sx= bx+ pr*cos(i*perAngle)
+        var sy =by+ pr*sin(i*perAngle)
+        penta1(sx,sy,sr)
+        i=i+1
+    }
+}
+
+// china(0,0)
+
+
+
+
+// 作业 7
+// 实现一个函数画法国国旗
+// france(x, y)
+
+// 实现步骤
+// 法国国旗由三个纵向矩形组成, 依次画出这三个矩形
+// 1. 计算出三个矩形的宽, 均为 1/3 * w
+// 2. 计算出三个矩形的左上角坐标, 分别为 x1, y1、x2, y2 和 x3, y3
+// 3. 调用三次 rect 函数, 每次传入不一样的参数
+
+// https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547200454269&di=2f5a17ee4ced5db63e125a7b954d0c7e&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F13%2F83%2F66%2F55a58PICheG_1024.png
+const france=function(x, y){
+    var i =0
+    while(i<3){
+        var x1=x+i*(fw/3)
+        var y1=y
+        rect(x1,y1,fw/3,fh)
+        i=i+1
+    }
+}
+// france(0,0)
+
+
+
+
+// 作业 8
+// 画德国国旗
+// germany(x, y)
+
+// 实现步骤
+//     德国国旗由三个横向矩形组成, 依次画出这三个矩形
+
+// 分步提示:
+// 1. 计算出三个矩形的高, 均为 1/3 * h
+// 2. 计算出三个矩形的左上角坐标, 分别为 x1, y1、x2, y2 和 x3, y3
+// 3. 调用三次 rect 函数, 每次传入不一样的参数
+
+// https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547200521471&di=4e3d41e58fd017fffbcdfbb4d33cacc0&imgtype=0&src=http%3A%2F%2Fpic.90sjimg.com%2Fdesign%2F01%2F40%2F91%2F47%2F58fddf9563923.png
+const germany=function(x, y){
+    var i =0
+    while(i<3){
+        var x1=x
+        var y1=y+i*(fh/3)
+        rect(x1,y1,fw,fh/3)
+        i=i+1
+    }
+}
+// germany(0,0)
+
+// 作业 9
+// 画 冈比亚国旗
+// gambia(x, y)
+
+// 实现步骤
+//     冈比亚国旗和德国国旗类似, 中间的矩形由一个大纵向矩形和两个小纵向矩形组成,
+//         所以画 5 个矩形
+// 1. 最上面和最下面两个矩形和德国国旗一致
+// 2. 中间的矩形分成三个矩形, 高度占比分别为 1:6:1, 分别计算出这三个矩形的中心坐标
+// 3. 分别计算中间三个矩形的长度和高度
+// 4. 使用 center_rect 画出 5 个矩形, 每次传入的参数不一致
+
+// https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547200557222&di=c371148958d1d03a56c9b8fb915fa67a&imgtype=0&src=http%3A%2F%2Fimg5.cache.netease.com%2Fcnews%2F2013%2F11%2F15%2F20131115084103a7ae1_550.png
+const gambia = function(x, y){
+    var cx=x+fw/2
+    var cy=y+fh/2
+    center_rect(cx, cy,fw*6/(6+1+1),fh/3)
+    center_rect(cx, cy,fw,fh/3)
+    center_rect(cx, cy,fw,fh)
+}
+
+// gambia(0,0)
+
+
+
+
+// 作业 10
+// 画 瑞士国旗
+// switzerland(x, y)
+
+// 实现步骤
+//     瑞士国旗由一个大矩形和两个小矩形组成, 需要画三个矩形
+
+// 分步提示:
+// 1. 瑞士国旗中的两个矩形大小是一样的, 都按照长边 75, 短边 25 来计算
+// 2. 计算出三个矩形的中心点坐标、长、宽
+// 3. 依次画出这三个矩形
+
+// https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=7adaad187b3e6709be0042f903fcf800/7acb0a46f21fbe09b63f922b6f600c338744ada8.jpg
+const switzerland=function(x, y){
+    rect(x,y,fw,fh/2)
+    var y1=y+fh/2
+    rect_line(x,y1,fw/2,fh/2,2,0)
+}
+// switzerland(0,0)
+
+// 作业 11
+// 画朝鲜国旗
+//
+
+
+
+// northkorea(x, y)
+
+// 提示:
+//     朝鲜国旗从上往下依次为蓝色矩形、白色矩形、红色矩形、白色矩形和蓝色矩形,
+//     这些矩形的高度比分别为 4:1:15:1:4, 红色矩形里包含了一个圆形和一个五角星
+// 圆形的直径和红色矩形的高度的比为 2:3, 圆形的圆点 x 坐标在国旗宽的 2/5 处
+// 使用这些数据计算出各个图形的坐标, 然后画出来
+
+// 实现步骤
+// 1. 分别计算出 5 个矩形的坐标和长宽
+// 2. 计算出圆形的圆心, 圆形的直径和红色矩形的高度的比为 2:3
+//      圆形的圆点 x 坐标在国旗宽的 2/5 处
+// 3. 画 5 个矩形
+// 4. 画圆形
+// 5. 画五角星
+
+// http://img1.cache.netease.com/catchpic/6/63/63D56955DF111752ADEDDF94ABC830F8.jpg
+const northkorea=function(x, y){
+    var cx=x+fw/2
+    var cy=y+fh/2
+    var th=4+1+15+4+1
+    center_rect(cx,cy,fw,fh*15/th)
+    center_rect(cx,cy,fw,fh*17/th)
+    center_rect(cx,cy,fw,fh)
+    var cirlex=x+fw*2/5
+    var cirley=y+fh/2
+    var r=fh*15/th*2/3/2
+    circle(cirlex,cirley,r)
+    penta1(cirlex,cirley,r)
+}
+
+northkorea(0,0)
+
+// 写出上述作业后, 如果你实在无聊, 还可以画美国国旗
