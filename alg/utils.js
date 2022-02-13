@@ -32,6 +32,9 @@ function isEqualArray(arr1, arr2) {
   if (arr1 == null && arr2 === null) {
     return true;
   }
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
 
   let res = true;
   for (let i = 0; i < arr1.length; i++) {
