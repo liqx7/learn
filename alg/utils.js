@@ -47,12 +47,15 @@ function isEqualArray(arr1, arr2) {
 }
 
 function swap(arr, i, j) {
-  if (i === j) {
-    return;
-  }
-  arr[i] = arr[i] ^ arr[j];
-  arr[j] = arr[i] ^ arr[j];
-  arr[i] = arr[i] ^ arr[j];
+  // if (i === j) {
+  //   return;
+  // }
+  // arr[i] = arr[i] ^ arr[j];
+  // arr[j] = arr[i] ^ arr[j];
+  // arr[i] = arr[i] ^ arr[j];
+  let temp = arr[i];
+  arr[i] = arr[j];
+  arr[j] = temp;
 }
 
 module.exports = {
