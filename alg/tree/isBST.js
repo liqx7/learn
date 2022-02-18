@@ -24,6 +24,44 @@ function isBST(head) {
   return isBST(head.right);
 }
 
+function isBSTRecur(head) {
+  if (head === null) {
+    return true;
+  }
+
+  let { isBST, min, max } = process(head);
+  return isBST;
+}
+
+function process(head) {
+  if (head === null) {
+    return { isBST: true, min: null, max: null };
+  }
+  let isBST = true;
+  let min = Number.MIN_SAFE_INTEGER;
+  let max = Number.MAX_SAFE_INTEGER;
+
+  let res1 = process(head.left);
+  let res2 = process(head.right);
+
+  if (res1.isBST === false || res2.isBST === false) {
+    isBST = false;
+  }
+
+  if (
+    (res1.max && res1.max >= head.value) ||
+    (res2.min && res1.min <= head.value)
+  ) {
+    isBST = false;
+  }
+
+  return {
+    isBST,
+    min: res1.min,
+    max: res2.max,
+  };
+}
+
 function test() {
   let head = new Node(5);
   head.left = new Node(3);
