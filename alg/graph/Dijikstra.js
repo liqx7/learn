@@ -29,6 +29,7 @@ function Dijkstra(graph, startNode) {
   return distanceMap;
 }
 
+// distanceMap中要找到最小的，但是不能被选过哦
 function getMinDistanceAndUnselectedNode(distanceMap, touchedNodes) {
   let minNode = null;
   let minDistance = Number.MAX_VALUE;
