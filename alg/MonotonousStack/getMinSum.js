@@ -4,88 +4,128 @@ const { genRandomArr } = require("../utils");
 
 function getMinSum(arr) {
   if (arr === null || arr.length < 1) {
-    return null;
+    return;
   }
 
   let stack = [];
+  let sums = [];
+  sums[0] = arr[0];
+
+  // 经典求法是求index，现在要求累加和，怎么能很快求出仍以位置间的累加和呢
+  for (let i = 1; i < arr.length; i++) {
+    sums[i] = sums[i - 1] + arr[i];
+  }
 
   let maxVal = Number.MIN_VALUE;
-
   for (let i = 0; i < arr.length; i++) {
-    let curList = [{ index: i, leftSum: 0, rightSum: 0 }];
-    while (stack.length > 0) {
-      let topList = stack.pop();
-
-      if (arr[curList[0].index] > arr[topList[0].index]) {
-        stack.push(topList);
-        // stack.push(curList);
-        // curList[0].leftSum += topList.length * arr[topList[0].index];
-        topList[0].rightSum += arr[curList[0].index];
-        break;
-      }
-      //
-      else if ((arr[curList[0].index] = arr[topList[0].index])) {
-        let newList = topList.concat(curList);
-        // stack.push(newList);
-        curList = newList;
-        break;
-      }
-      // 弹出操作
-      else {
-        maxVal = Math.max(maxVal, process(arr, topList));
-        // 弹出比他大的
-        curList[0].leftSum += topList.length * arr[topList[0].index];
-
-        //
-      }
+    while (stack.length > 0 && arr[i] < arr[stack[stack.length - 1]]) {
+      let popIndex = stack.pop();
+      let leftMoreIndex = stack.length > 0 ? stack[stack.length - 1] : -1;
+      let popSum = (sums[popIndex - 1] || 0) - (sums[leftMoreIndex] || 0);
+      maxVal = Math.max(maxVal, popSum * arr[popIndex]);
     }
 
-    stack.push(curList);
+    stack.push(i);
   }
 
   while (stack.length > 0) {
-    let curList = stack.pop();
-    maxVal = Math.max(maxVal, process(arr, curList));
-    return maxVal;
+    let popIndex = stack.pop();
+    leftMoreIndex = stack.length > 0 ? stack[stack.length - 1] : -1;
+    let popSum = sums[popIndex] - (sums[leftMoreIndex] || 0);
+    maxVal = Math.max(maxVal, popSum * arr[popIndex]);
   }
 
   return maxVal;
 }
 
-function process(arr, topList) {
-  return (
-    arr[topList[0].index] *
-    (topList[0].leftSum +
-      arr[topList[0].index] * topList.length +
-      topList[0].rightSum)
-  );
+function getMinSum2(arr) {
+  if (arr === null || arr.length < 1) {
+    return null;
+  }
+
+  let stack = [];
+  let sums = [];
+  sums[0] = arr[0];
+
+  for (let i = 1; i < arr.length; i++) {
+    sums[i] = sums[i - 1] + arr[i];
+  }
+
+  let maxVal = Number.MIN_VALUE;
+
+  for (let i = 0; i < arr.length; i++) {
+    while (stack.length > 0 && arr[i] < arr[stack[stack.length - 1][0]]) {
+      let popList = stack.pop();
+      let leftLessList = stack.length > 0 ? stack[stack.length - 1] : [-1];
+      let leftLessIndex = leftLessList[leftLessList.length - 1];
+
+      let popSum = (sums[i - 1] || 0) - (sums[leftLessIndex] || 0);
+
+      maxVal = Math.max(maxVal, arr[popList[0]] * popSum);
+    }
+    if (stack.length > 0 && arr[i] === arr[stack[stack.length - 1][0]]) {
+      stack[stack.length - 1].push(i);
+    } else {
+      let list = [i];
+      stack.push(list);
+    }
+  }
+
+  while (stack.length > 0) {
+    let popList = stack.pop();
+    let leftLessList = stack.length > 0 ? stack[stack.length - 1] : [-1];
+    let leftLessIndex = leftLessList[leftLessList.length - 1];
+
+    let popSum = sums[popList[popList.length - 1]] - (sums[leftLessIndex] || 0);
+
+    maxVal = Math.max(maxVal, popSum * arr[popList[0]]);
+  }
+
+  return maxVal;
 }
 
 function max2(arr) {
+  if (arr == null || arr.length < 1) {
+    return;
+  }
   let max = Number.MIN_VALUE;
   for (let i = 0; i < arr.length; i++) {
-    let minValue = arr[i];
-    let sum = 0;
-    for (let j = i; j < arr.length; j++) {
-      sum += arr[j];
-      if (arr[j] < minValue) {
-        minValue = arr[j];
+    let sum = arr[i];
+
+    let j = i + 1;
+    for (; j < arr.length; j++) {
+      if (arr[j] > arr[i]) {
+        sum += arr[j];
+      } else {
+        break;
       }
     }
-    max = Math.max(max, sum * minValue);
+    j = i - 1;
+
+    for (; j >= 0; j--) {
+      if (arr[j] > arr[i]) {
+        sum += arr[j];
+      } else {
+        break;
+      }
+    }
+    max = Math.max(max, sum * arr[i]);
   }
   return max;
 }
 
 function main() {
-  let testTimes = 50;
+  let testTimes = 500000;
   let maxSize = 10;
   let maxValue = 10;
   let succeed = true;
 
   for (let i = 0; i < testTimes; i++) {
     let arr = genRandomArr(maxSize, maxValue);
-    let res1 = getMinSum(arr);
+
+    // let arr = [9, 8, 1, 4, 0, 3, 9, 5];
+    //
+    let res1 = getMinSum2(arr);
     let res2 = max2(arr);
 
     if (res1 != res2) {
