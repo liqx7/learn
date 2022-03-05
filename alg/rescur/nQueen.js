@@ -1,4 +1,5 @@
 // n皇后
+<<<<<<< HEAD
 
 function nQ(n) {
   if (n === null || n < 1) {
@@ -10,6 +11,19 @@ function nQ(n) {
 }
 
 // n行，第i行开始所有的数量，需要依赖前面的，把全局的传进来
+=======
+function num(n) {
+  if (n < 1) {
+    return 0;
+  }
+  let record = new Array(n);
+  return process(n, 0, record);
+  console.log(`------record------`);
+  console.log(record);
+}
+
+// n棋盘，前面都填好，第i行往下总共有多少 的数量
+>>>>>>> 0983d14ea7622e07834205ebd49587728f13c780
 function process(n, i, record) {
   if (i === n) {
     return 1;
