@@ -1,4 +1,4 @@
-function generateRandomArray(maxSize, maxValue) {
+export function generateRandomArray(maxSize, maxValue) {
   let arr = new Array(parseInt((maxSize + 1) * Math.random()));
   for (let i = 0; i < arr.length; i++) {
     arr[i] = generateRandomNum(maxValue);
@@ -7,14 +7,14 @@ function generateRandomArray(maxSize, maxValue) {
   return arr;
 }
 
-function generateRandomNum(maxValue) {
+export function generateRandomNum(maxValue) {
   return (
     parseInt((maxValue + 1) * Math.random()) -
     parseInt(maxValue * Math.random())
   );
 }
 
-function genRandomArr(maxSize, maxValue) {
+export function genRandomArr(maxSize, maxValue) {
   let arr = new Array(parseInt((maxSize + 1) * Math.random()));
   for (let i = 0; i < arr.length; i++) {
     arr[i] = genRandomNum(maxValue);
@@ -23,11 +23,11 @@ function genRandomArr(maxSize, maxValue) {
   return arr;
 }
 
-function genRandomNum(maxValue) {
+export function genRandomNum(maxValue) {
   return parseInt((maxValue + 1) * Math.random());
 }
 
-function copyArray(arr) {
+export function copyArray(arr) {
   if (arr === null) {
     return null;
   }
@@ -38,7 +38,7 @@ function copyArray(arr) {
   return res;
 }
 
-function isEqualArray(arr1, arr2) {
+export function isEqualArray(arr1, arr2) {
   if ((arr1 === null && arr2 !== null) || (arr1 !== null && arr2 === null)) {
     return false;
   }
@@ -59,7 +59,7 @@ function isEqualArray(arr1, arr2) {
   return res;
 }
 
-function swap(arr, i, j) {
+export function swap(arr, i, j) {
   // if (i === j) {
   //   return;
   // }
@@ -71,7 +71,7 @@ function swap(arr, i, j) {
   arr[j] = temp;
 }
 
-class Heap {
+export class Heap {
   constructor(comparator) {
     this.arr = [];
     this.comparator = comparator;
@@ -146,14 +146,3 @@ class Heap {
     }
   }
 }
-
-module.exports = {
-  generateRandomNum,
-  generateRandomArray,
-  copyArray,
-  isEqualArray,
-  swap,
-  genRandomArr,
-  genRandomNum,
-  Heap,
-};
