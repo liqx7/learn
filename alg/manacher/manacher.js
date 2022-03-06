@@ -1,17 +1,21 @@
 // manacher
 
 function manacher(str) {
-  let arr = str.split("");
-
-  let res = new Array(arr.lrength * 2);
-  let index = 0;
-  for (let i = 0; i < res.length; i++) {
-    res[i] = (i & 1) === 0 ? "#" : arr[index++];
+  if (str === null) {
+    return null;
   }
+
+  let arr = new Array(str.length * 2);
+
+  let index = 0;
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = (i & 1) === 0 ? "#" : str[index++];
+  }
+  return arr;
 }
 
-function maxLcpsLength(str) {
-  if (str == null || str.length === 0) {
+function getLcpsLength(str) {
+  if (str === null || str.length < 1) {
     return 0;
   }
 
@@ -19,14 +23,13 @@ function maxLcpsLength(str) {
 
   let pArr = new Array(arr.length);
 
-  let C = -1;
   let R = -1;
+  let C = -1;
 
   let max = Number.MIN_SAFE_INTEGER;
 
   for (let i = 0; i < arr.length; i++) {
-    // 在内
-    pArr[i] = R > i ? Math.min(pArr[2 * C - i], R - i) : 1; // 至少的半径，向两边扩
+    pArr[i] = R > i ? Math.min(pArr[2 * C - i], R - i) : 1;
 
     while (i + pArr[i] < arr.length && i - pArr[i] > -1) {
       if (arr[i + pArr[i]] === arr[i - pArr[i]]) {
@@ -38,10 +41,17 @@ function maxLcpsLength(str) {
 
     if (i + pArr[i] > R) {
       R = i + pArr[i];
-      c = i;
+      C = i;
     }
-
     max = Math.max(max, pArr[i]);
   }
+
   return max - 1;
 }
+
+function test() {
+  let arr = "abc123321caa";
+  console.log(getLcpsLength(arr));
+}
+
+test();
