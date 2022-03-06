@@ -76,7 +76,7 @@ function getMinSum2(arr) {
     let leftLessList = stack.length > 0 ? stack[stack.length - 1] : [-1];
     let leftLessIndex = leftLessList[leftLessList.length - 1];
 
-    let popSum = sums[popList[popList.length - 1]] - (sums[leftLessIndex] || 0);
+    let popSum = sums[arr.length - 1] - (sums[leftLessIndex] || 0); //最后没弹出的就是知道结尾都没有比他大的数
 
     maxVal = Math.max(maxVal, popSum * arr[popList[0]]);
   }
@@ -103,7 +103,7 @@ function max2(arr) {
     j = i - 1;
 
     for (; j >= 0; j--) {
-      if (arr[j] > arr[i]) {
+      if (arr[j] >= arr[i]) {
         sum += arr[j];
       } else {
         break;
@@ -123,7 +123,7 @@ function main() {
   for (let i = 0; i < testTimes; i++) {
     let arr = genRandomArr(maxSize, maxValue);
 
-    // let arr = [9, 8, 1, 4, 0, 3, 9, 5];
+    // let arr = [4, 8, 10];
     //
     let res1 = getMinSum2(arr);
     let res2 = max2(arr);

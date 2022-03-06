@@ -147,6 +147,19 @@ class Heap {
   }
 }
 
+function genRandomStr(maxSize) {
+  //  String.fromCharCode((parseInt(Math.random()*26)+'a'.charCodeAt()))
+  let arr = [];
+  let i = 0;
+  while (i < maxSize) {
+    arr[i] = String.fromCharCode(
+      parseInt(Math.random() * 26) + "a".charCodeAt()
+    );
+    i++;
+  }
+  return arr.join("");
+}
+
 module.exports = {
   generateRandomNum,
   generateRandomArray,
@@ -156,4 +169,5 @@ module.exports = {
   genRandomArr,
   genRandomNum,
   Heap,
+  genRandomStr,
 };
